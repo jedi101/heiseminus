@@ -20,7 +20,7 @@
     }
   ],
   "icons": {
-    "128": "heiseminusIcon.png"
+    "128": "images/heiseminusIcon.png"
   },
   "web_accessible_resources" : [ 
     "images/*.svg"
