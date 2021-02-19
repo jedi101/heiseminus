@@ -1,4 +1,4 @@
-console.log("HeiseMinus: is loaded.");
+console.log("HeiseMinus loaded.");
 
 /*
 * Search Definitions
@@ -7,7 +7,6 @@ const searches = [
     { "childElement": ".heiseplus-logo-small", "parentElement": "ARTICLE", "action": "hide" },
     { "childElement": ".stage--heiseplus", "parentElement": "ASIDE", "action": "hide" },
     { "childElement": ".heiseplus-logo", "parentElement": "svg", "action": "replaceImg" },
-    { "childElement": ".a-box__target", "parentElement": "DIV", "action": "hide" }
 ];
 
 /**
@@ -65,34 +64,18 @@ function hideHeisePlus(searches) {
     })
 }
 
-// /* *
-//  * Find the parent of a the specified tag and work the way up to selct
-//  * his parent node and return it.
-//  * based on https://stackoverflow.com/a/7333885
-//  * @param {Node} startNodede starting node for reverse parent look up operation
-//  * @param {String} IdentifierTagName specifier of the end nodes node name
-//  * 
-//  * @return {Node} return parent node or null if no parent node found
-//  */
-// function findParent(startNode, IdentifierTagName) {
-//     if (startNode.tagName === IdentifierTagName) {
-//         return startNode;
-//     }
-//     while (startNode.parentNode) {
-//         startNode = startNode.parentNode;
-//         if (startNode.tagName === IdentifierTagName)
-//             return startNode;
-//     }
-//     return null;
-// }
-
+/**
+ * Find the parent of a the specified tag and work the way up to select
+ * his parent node and return it.
+ * @param {Node} startNodede starting node for reverse parent look up operation
+ * @param {String} endNodeTagName specifier of the end nodes node name
+ * @return {Node} return parent node
+ */
 function recursiveBacktraceToParentNode(startNode, endNodeTagName) {
-    let currentNode = startNode
-
-    if (currentNode.tagName === endNodeTagName) {
-        return currentNode
+    // escape recursion if we found our parent node
+    if (startNode.tagName === endNodeTagName) {
+        return startNode
     }
-    
-    currentNode = currentNode.parentNode
-    recursiveBacktraceToParentNode(currentNode, endNodeTagName)
+    // recursive call as long as we haven't found the parent yet
+    return recursiveBacktraceToParentNode(startNode.parentNode, endNodeTagName)
 }
