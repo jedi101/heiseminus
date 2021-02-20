@@ -1,12 +1,4 @@
 const config = {
-    "tag": {
-        "tagName": "img",
-        "src": "",
-        "localFilePath": "images/heiseminus-logo.svg",
-        "width": 80,
-        "height": 24
-    },
-
     "searches": {
         ".heiseplus-logo-small": "hide",
         ".stage--heiseplus": "hide",
@@ -14,46 +6,54 @@ const config = {
         ".sitemap-group__link--heiseplus": "hide",
         ".cms-block-abo-row": "hide",
         "a-collapse-group > a-collapse:nth-child(2)": "hide",
+        "a-paid-content-teaser": "hide",
         ".heiseplus-logo": "replaceImg"
+    },
+    "tag": {
+        "tagName": "img",
+        "src": "",
+        "localFilePath": "images/heiseminus-logo.svg",
+        "width": 80,
+        "height": 24
     }
 }
 
 function main(config) {
-    const heiseminus = new HeiseMinus(config)
+    const imageTagInstance = new Tag(config.tag)
+    const heiseMinusInstance = new HeiseMinus(config, imageTagInstance.tag)
 }
 
 class HeiseMinus {
-    constructor(config) {
-        const tagObject = new Tag(config.tag)
-        this.newLogo = tagObject.tag
+    constructor(config, imageTag) {
+        this.newLogo = imageTag
         this.searches = config.searches
-        this.hideHeisePlus()
+        this.#hideHeisePlus()
     }
 
-    hideHeisePlus() {
+    #hideHeisePlus() {
         for (const [searchstring, action] of Object.entries(this.searches)) {
 
-            const selection = this.selectElements(searchstring)
+            const selection = this.#selectElements(searchstring)
 
             selection.forEach(selectedElement => {
                 if (action === "hide") {
-                    this.hideElement(selectedElement)
+                    this.#hideElement(selectedElement)
                 } else if (action === "replaceImg") {
-                    this.replaceElement(selectedElement)
+                    this.#replaceElement(selectedElement)
                 }
             })
         }
     }
 
-    selectElements(identifier) {
+    #selectElements(identifier) {
         return document.querySelectorAll(identifier)
     }
 
-    hideElement(selectionToHide) {
+    #hideElement(selectionToHide) {
         selectionToHide.style.display = "none"
     }
 
-    replaceElement(nodeToReplace) {
+    #replaceElement(nodeToReplace) {
         nodeToReplace.parentElement.replaceChild(this.newLogo, nodeToReplace)
     }
 
