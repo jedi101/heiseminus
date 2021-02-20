@@ -74,7 +74,6 @@ class Tag {
     }
 
     #createLocalFileURL() {
-        // this.src = this.localFilePath
         this.src = chrome.extension.getURL(this.localFilePath)
     }
 
