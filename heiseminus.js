@@ -1,14 +1,16 @@
 const config = {
-    "searches": {
-        ".heiseplus-logo-small": "hide",
-        ".stage--heiseplus": "hide",
-        ".heiseplus-lnk": "hide",
-        ".sitemap-group__link--heiseplus": "hide",
-        ".cms-block-abo-row": "hide",
-        "a-collapse-group > a-collapse:nth-child(2)": "hide",
-        "a-paid-content-teaser": "hide",
-        ".heiseplus-logo": "replaceImg"
-    },
+    "searches": [
+        {
+            "startNode": ".heiseplus-logo-small",
+            "parentElement": "article",
+            "action": "hide"
+        },
+        {
+            "startNode": ".heiseplus-logo",
+            "parentElement": "article",
+            "action": "replaceImg"
+        }
+    ],
     "tag": {
         "tagName": "img",
         "src": "",
@@ -27,7 +29,27 @@ class HeiseMinus {
     constructor(config, imageTag) {
         this.newLogo = imageTag
         this.searches = config.searches
-        this.#hideHeisePlus()
+        this.#hideHeisePlusPlus()
+    }
+
+    #hideHeisePlusPlus() {
+        Object.values(this.searches).forEach(search => {
+            const selection = this.#selectElements(search.startNode)
+
+            selection.forEach(selectedElement => {
+                const parentNode = this.#findParentNodeOf(selectedElement, search.parentElement)
+
+                if (parentNode !== "undefined") {
+                    if (search.action === "hide") {
+                        this.#hideElement(selectedElement)
+                    } else if (search.action === "replaceImg") {
+                        this.#replaceElement(selectedElement)
+                    } else {
+                        console.log("No search action specified.")
+                    }
+                }
+            })
+        });
     }
 
     #hideHeisePlus() {
@@ -47,6 +69,22 @@ class HeiseMinus {
 
     #selectElements(identifier) {
         return document.querySelectorAll(identifier)
+    }
+    
+    /**
+     * Find the parent of a the specified tag and work the way up to select
+     * his parent node and return it.
+     * @param {Node} startNodede starting node for reverse parent look up operation
+     * @param {String} endNodeTagName specifier of the end nodes node name
+     * @return {Node} return parent node
+     */
+    #findParentNodeOf(selectedElement, parentElement) {
+        // escape recursion if we found our parent node
+        if (selectedElement.tagName === parentElement) {
+            return selectedElement
+        }
+        // recursive call as long as we haven't found the parent yet
+        return recursiveBacktraceToParentNode(selectedElement.parentNode, parentElement)
     }
 
     #hideElement(selectionToHide) {
