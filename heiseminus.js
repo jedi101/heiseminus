@@ -1,76 +1,46 @@
-const config = {
-    "searches": [
-        {
-            "startNode": ".heiseplus-logo-small",
-            "parentElement": "article",
-            "action": "hide"
-        },
-        {
-            "startNode": ".heiseplus-logo",
-            "parentElement": "article",
-            "action": "replaceImg"
-        }
-    ],
-    "tag": {
-        "tagName": "img",
-        "src": "",
-        "localFilePath": "images/heiseminus-logo.svg",
-        "width": 80,
-        "height": 24
-    }
-}
-
-function main(config) {
-    const imageTagInstance = new Tag(config.tag)
-    const heiseMinusInstance = new HeiseMinus(config, imageTagInstance.tag)
-}
-
 class HeiseMinus {
     constructor(config, imageTag) {
-        this.newLogo = imageTag
-        this.searches = config.searches
-        this.#hideHeisePlusPlus()
-    }
-
-    #hideHeisePlusPlus() {
-        Object.values(this.searches).forEach(search => {
-            const selection = this.#selectElements(search.startNode)
-
-            selection.forEach(selectedElement => {
-                const parentNode = this.#findParentNodeOf(selectedElement, search.parentElement)
-
-                if (parentNode !== "undefined") {
-                    if (search.action === "hide") {
-                        this.#hideElement(selectedElement)
-                    } else if (search.action === "replaceImg") {
-                        this.#replaceElement(selectedElement)
-                    } else {
-                        console.log("No search action specified.")
-                    }
-                }
-            })
-        });
+        this.newLogo = imageTag;
+        this.searches = config.searches;
+        this.#hideHeisePlus();
     }
 
     #hideHeisePlus() {
-        for (const [searchstring, action] of Object.entries(this.searches)) {
-
-            const selection = this.#selectElements(searchstring)
+        Object.values(this.searches).forEach(search => {
+            const selection = this.#selectElements(search.startNode);
 
             selection.forEach(selectedElement => {
-                if (action === "hide") {
-                    this.#hideElement(selectedElement)
-                } else if (action === "replaceImg") {
-                    this.#replaceElement(selectedElement)
+                const parentNode = this.#findParentNodeOf(selectedElement, search.parentElement)
+                
+                if (parentNode !== "undefined" && parentNode !== null) {
+                    if (search.action === "hide") {
+                        console.log("Config: " + search.startNode
+                        + " -> " + search.parentElement
+                        + " -> " + search.action + " -> ", parentNode)
+
+                        this.#hideElement(parentNode);
+                    } else if (search.action === "replaceImg") {
+                        console.log("Config: " + search.startNode
+                        + " -> " + search.parentElement
+                        + " -> " + search.action + " -> ", parentNode)
+                        
+                        this.#replaceElement(parentNode);
+                    } else {
+                        console.log("No search action specified.");
+                    }
+                } else {
+                    console.log("No ParentNode found for search: "
+                        + search.startNode + " with parentElement: "
+                        + search.parentElement);
                 }
-            })
-        }
+            });
+        });
     }
 
     #selectElements(identifier) {
-        return document.querySelectorAll(identifier)
+        return document.querySelectorAll(identifier);
     }
-    
+
     /**
      * Find the parent of a the specified tag and work the way up to select
      * his parent node and return it.
@@ -79,54 +49,23 @@ class HeiseMinus {
      * @return {Node} return parent node
      */
     #findParentNodeOf(selectedElement, parentElement) {
-        // escape recursion if we found our parent node
-        if (selectedElement.tagName === parentElement) {
-            return selectedElement
+        if (selectedElement == null) {
+            return null;
+        } else if (selectedElement.tagName === parentElement) {
+            return selectedElement;
+        } else {
+            // recursive call as long as we haven't found the parent yet
+            return this.#findParentNodeOf(selectedElement.parentNode, parentElement);
         }
-        // recursive call as long as we haven't found the parent yet
-        return recursiveBacktraceToParentNode(selectedElement.parentNode, parentElement)
     }
 
     #hideElement(selectionToHide) {
-        selectionToHide.style.display = "none"
+        selectionToHide.style.display = "none";
+        // selectionToHide.style.visibility = "hidden"
     }
 
     #replaceElement(nodeToReplace) {
-        nodeToReplace.parentElement.replaceChild(this.newLogo, nodeToReplace)
+        nodeToReplace.parentElement.replaceChild(this.newLogo, nodeToReplace);
     }
 
 }
-
-class Tag {
-    constructor(config) {
-        this.setAttributes(config)
-        this.#createLocalFileURL()
-        this.#createNewRawElement()
-        this.#addAttributesToRawElement()
-    }
-
-    setAttributes(attributes) {
-        for (const [key, value] of Object.entries(attributes)) {
-            this[key] = value
-        }
-    }
-
-    #createLocalFileURL() {
-        this.src = chrome.extension.getURL(this.localFilePath)
-    }
-
-    #createNewRawElement() {
-        this.rawElement = document.createElement(this.tagName)
-    }
-
-    #addAttributesToRawElement() {
-        for (const [key, value] of Object.entries(this)) {
-            if (key !== "rawElement" && key !== "tagName" && key !== "localFilePath") {
-                this.rawElement.setAttribute(key, value)
-            }
-        };
-        this.tag = this.rawElement
-    }
-}
-
-main(config)

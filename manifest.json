@@ -1,6 +1,6 @@
 {
-  "name": "Heise Minus",
-  "version": "0.0.7",
+  "name": "HeiseMinus",
+  "version": "0.0.8",
   "description": "Entfernt automatisch Heise Plus Artikel",
   "permissions": [
     "activeTab"
@@ -15,14 +15,17 @@
       ],
       "run_at": "document_end",
       "js": [
-        "heiseminus.js"
+        "config.js",
+        "Tag.js",
+        "HeiseMinus.js",
+        "main.js"
       ]
     }
   ],
   "icons": {
     "128": "images/heiseminusIcon.png"
   },
-  "web_accessible_resources" : [ 
+  "web_accessible_resources": [
     "images/*.svg"
   ],
   "manifest_version": 2
