@@ -11,7 +11,7 @@ class HeiseMinus {
 
             selection.forEach(selectedElement => {
                 const parentNode = this.#findParentNodeOf(selectedElement, search.parentElement)
-                
+
                 if (parentNode !== "undefined" && parentNode !== null) {
                     if (search.action === "hide") {
                         console.log("Config: " + search.startNode
@@ -67,5 +67,4 @@ class HeiseMinus {
     #replaceElement(nodeToReplace) {
         nodeToReplace.parentElement.replaceChild(this.newLogo, nodeToReplace);
     }
-
 }
