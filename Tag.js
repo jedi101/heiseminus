@@ -1,4 +1,5 @@
 class Tag {
+    // consturctor
     constructor(config) {
         this.setAttributes(config);
         this.#createLocalFileURL();
