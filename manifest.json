@@ -16,8 +16,8 @@
       "run_at": "document_end",
       "js": [
         "config.js",
-        "Tag.js",
-        "HeiseMinus.js",
+        "tag.js",
+        "heiseminus.js",
         "main.js"
       ]
     }
