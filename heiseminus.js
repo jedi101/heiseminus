@@ -10,26 +10,26 @@ class HeiseMinus {
             const selection = this.#selectElements(search.startIdentifier);
 
             selection.forEach(selectedElement => {
-                const parentNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
+                const endNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
 
-                if (parentNode) {
+                if (endNode) {
                     if (search.action === "hide") {
                         console.log("Config: " + search.startIdentifier
                             + " -> " + search.endIdentifier
-                            + " -> " + search.action + " -> ", parentNode)
+                            + " -> " + search.action + " -> ", endNode)
 
-                        this.#hideElement(parentNode);
+                        this.#hideElement(endNode);
                     } else if (search.action === "replaceImg") {
                         console.log("Config: " + search.startIdentifier
                             + " -> " + search.endIdentifier
-                            + " -> " + search.action + " -> ", parentNode)
+                            + " -> " + search.action + " -> ", endNode)
 
-                        this.#replaceElement(parentNode);
+                        this.#replaceElement(endNode);
                     } else {
                         console.log("No search action specified.");
                     }
                 } else {
-                    console.log("No ParentNode found for search: "
+                    console.log("No endNode found for search: "
                         + search.startIdentifier + " with endIdentifier: "
                         + search.endIdentifier);
                 }
