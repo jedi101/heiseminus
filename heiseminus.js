@@ -12,7 +12,7 @@ class HeiseMinus {
             selection.forEach(selectedElement => {
                 const parentNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
 
-                if (parentNode !== "undefined" && parentNode !== null) {
+                if (parentNode) {
                     if (search.action === "hide") {
                         console.log("Config: " + search.startIdentifier
                             + " -> " + search.endIdentifier
@@ -48,7 +48,7 @@ class HeiseMinus {
         if (selectedElement.tagName === endIdentifier) {
             return selectedElement;
         }
-        return this.#findEndNodeOf(selectedElement.endNode, endIdentifier);
+        return this.#findEndNodeOf(selectedElement.parentNode, endIdentifier);
     }
 
     #hideElement(elementToHide) {
