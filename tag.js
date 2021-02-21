@@ -1,13 +1,13 @@
 class Tag {
     // consturctor
     constructor(config) {
-        this.setAttributes(config);
+        this.#setAttributes(config);
         this.#createLocalFileURL();
         this.#createNewRawElement();
         this.#addAttributesToRawElement();
     }
 
-    setAttributes(attributes) {
+    #setAttributes(attributes) {
         for (const [key, value] of Object.entries(attributes)) {
             this[key] = value;
         }

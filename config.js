@@ -1,9 +1,9 @@
 const config = {
     "searches": [
-        { "startNode": ".heiseplus-logo-small", "parentElement": "A-COLLAPSE", "action": "hide" },
-        { "startNode": ".heiseplus-logo-small", "parentElement": "ARTICLE", "action": "hide" },
-        { "startNode": ".stage--heiseplus", "parentElement": "ASIDE", "action": "hide" },
-        { "startNode": ".heiseplus-logo", "parentElement": "svg", "action": "replaceImg" }
+        { "startIdentifier": ".heiseplus-logo-small", "endIdentifier": "A-COLLAPSE", "action": "hide" },
+        { "startIdentifier": ".heiseplus-logo-small", "endIdentifier": "ARTICLE", "action": "hide" },
+        { "startIdentifier": ".stage--heiseplus", "endIdentifier": "ASIDE", "action": "hide" },
+        { "startIdentifier": ".heiseplus-logo", "endIdentifier": "svg", "action": "replaceImg" }
     ],
     "tag": {
         "tagName": "img",

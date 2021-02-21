@@ -7,31 +7,19 @@ class HeiseMinus {
 
     #hideHeisePlus() {
         Object.values(this.searches).forEach(search => {
-            const selection = this.#selectElements(search.startNode);
+            const selection = this.#selectElements(search.startIdentifier)
 
             selection.forEach(selectedElement => {
-                const parentNode = this.#findParentNodeOf(selectedElement, search.parentElement)
+                const endNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
 
-                if (parentNode !== "undefined" && parentNode !== null) {
+                if (endNode) {
                     if (search.action === "hide") {
-                        console.log("Config: " + search.startNode
-                        + " -> " + search.parentElement
-                        + " -> " + search.action + " -> ", parentNode)
-
-                        this.#hideElement(parentNode);
-                    } else if (search.action === "replaceImg") {
-                        console.log("Config: " + search.startNode
-                        + " -> " + search.parentElement
-                        + " -> " + search.action + " -> ", parentNode)
-                        
-                        this.#replaceElement(parentNode);
-                    } else {
-                        console.log("No search action specified.");
+                        this.#hideElement(endNode)
                     }
-                } else {
-                    console.log("No ParentNode found for search: "
-                        + search.startNode + " with parentElement: "
-                        + search.parentElement);
+
+                    if (search.action === "replaceImg") {
+                        this.#replaceElement(endNode)
+                    }
                 }
             });
         });
@@ -41,30 +29,21 @@ class HeiseMinus {
         return document.querySelectorAll(identifier);
     }
 
-    /**
-     * Find the parent of a the specified tag and work the way up to select
-     * his parent node and return it.
-     * @param {Node} startNodede starting node for reverse parent look up operation
-     * @param {String} endNodeTagName specifier of the end nodes node name
-     * @return {Node} return parent node
-     */
-    #findParentNodeOf(selectedElement, parentElement) {
+    #findEndNodeOf(selectedElement, endIdentifier) {
         if (selectedElement == null) {
             return null;
-        } else if (selectedElement.tagName === parentElement) {
-            return selectedElement;
-        } else {
-            // recursive call as long as we haven't found the parent yet
-            return this.#findParentNodeOf(selectedElement.parentNode, parentElement);
         }
+        if (selectedElement.tagName === endIdentifier) {
+            return selectedElement;
+        }
+        return this.#findEndNodeOf(selectedElement.endNode, endIdentifier);
     }
 
-    #hideElement(selectionToHide) {
-        selectionToHide.style.display = "none";
-        // selectionToHide.style.visibility = "hidden"
+    #hideElement(elementToHide) {
+        elementToHide.style.display = "none";
     }
 
-    #replaceElement(nodeToReplace) {
-        nodeToReplace.parentElement.replaceChild(this.newLogo, nodeToReplace);
+    #replaceElement(elementToReplace) {
+        elementToReplace.endIdentifier.replaceChild(this.newLogo, elementToReplace);
     }
 }
