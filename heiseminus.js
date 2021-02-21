@@ -7,19 +7,31 @@ class HeiseMinus {
 
     #hideHeisePlus() {
         Object.values(this.searches).forEach(search => {
-            const selection = this.#selectElements(search.startIdentifier)
+            const selection = this.#selectElements(search.startIdentifier);
 
             selection.forEach(selectedElement => {
-                const endNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
+                const parentNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
 
-                if (endNode) {
+                if (parentNode !== "undefined" && parentNode !== null) {
                     if (search.action === "hide") {
-                        this.#hideElement(endNode)
-                    }
+                        console.log("Config: " + search.startIdentifier
+                            + " -> " + search.endIdentifier
+                            + " -> " + search.action + " -> ", parentNode)
 
-                    if (search.action === "replaceImg") {
-                        this.#replaceElement(endNode)
+                        this.#hideElement(parentNode);
+                    } else if (search.action === "replaceImg") {
+                        console.log("Config: " + search.startIdentifier
+                            + " -> " + search.endIdentifier
+                            + " -> " + search.action + " -> ", parentNode)
+
+                        this.#replaceElement(parentNode);
+                    } else {
+                        console.log("No search action specified.");
                     }
+                } else {
+                    console.log("No ParentNode found for search: "
+                        + search.startIdentifier + " with endIdentifier: "
+                        + search.endIdentifier);
                 }
             });
         });
