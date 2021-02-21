@@ -14,24 +14,12 @@ class HeiseMinus {
 
                 if (endNode) {
                     if (search.action === "hide") {
-                        console.log("Config: " + search.startIdentifier
-                            + " -> " + search.endIdentifier
-                            + " -> " + search.action + " -> ", endNode)
-
                         this.#hideElement(endNode);
-                    } else if (search.action === "replaceImg") {
-                        console.log("Config: " + search.startIdentifier
-                            + " -> " + search.endIdentifier
-                            + " -> " + search.action + " -> ", endNode)
-
-                        this.#replaceElement(endNode);
-                    } else {
-                        console.log("No search action specified.");
                     }
-                } else {
-                    console.log("No endNode found for search: "
-                        + search.startIdentifier + " with endIdentifier: "
-                        + search.endIdentifier);
+
+                    if (search.action === "replaceImg") {
+                        this.#replaceElement(endNode);
+                    }
                 }
             });
         });
