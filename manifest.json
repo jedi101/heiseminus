@@ -23,7 +23,9 @@
     }
   ],
   "icons": {
-    "128": "images/heiseminusIcon.png"
+    "16": "images/heiseminusIcon16px.png",
+    "48": "images/heiseminusIcon48px.png",
+    "128": "images/heiseminusIcon128px.png"
   },
   "web_accessible_resources": [
     "images/*.svg"
