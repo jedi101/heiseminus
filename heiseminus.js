@@ -44,6 +44,6 @@ class HeiseMinus {
     }
 
     #replaceElement(elementToReplace) {
-        elementToReplace.endIdentifier.replaceChild(this.newLogo, elementToReplace);
+        elementToReplace.parentNode.replaceChild(this.newLogo, elementToReplace);
     }
 }
