@@ -1,24 +1,25 @@
 class HeiseMinus {
     constructor(config, imageTag) {
-        this.newLogo = imageTag;
-        this.searches = config.searches;
-        this.#hideHeisePlus();
+        this.newLogo = imageTag
+        this.searches = config.searches
+        this.#hideHeisePlus()
     }
 
     #hideHeisePlus() {
         Object.values(this.searches).forEach(search => {
-            const selection = this.#selectElements(search.startIdentifier);
+            const selection = this.#selectElements(search.startIdentifier)
 
             selection.forEach(selectedElement => {
                 const endNode = this.#findEndNodeOf(selectedElement, search.endIdentifier)
 
                 if (endNode) {
-                    if (search.action === "hide") {
-                        this.#hideElement(endNode);
-                    }
-
-                    if (search.action === "replaceImg") {
-                        this.#replaceElement(endNode);
+                    switch (search.action) {
+                        case "hide":
+                            this.#hideElement(endNode)
+                            break
+                        case "replaceImg":
+                            this.#replaceElement(endNode)
+                            break
                     }
                 }
             });
@@ -31,19 +32,19 @@ class HeiseMinus {
 
     #findEndNodeOf(selectedElement, endIdentifier) {
         if (selectedElement == null) {
-            return null;
+            return null
         }
         if (selectedElement.tagName === endIdentifier) {
-            return selectedElement;
+            return selectedElement
         }
-        return this.#findEndNodeOf(selectedElement.parentNode, endIdentifier);
+        return this.#findEndNodeOf(selectedElement.parentNode, endIdentifier)
     }
 
     #hideElement(elementToHide) {
-        elementToHide.style.display = "none";
+        elementToHide.style.display = "none"
     }
 
     #replaceElement(elementToReplace) {
-        elementToReplace.parentNode.replaceChild(this.newLogo, elementToReplace);
+        elementToReplace.parentNode.replaceChild(this.newLogo, elementToReplace)
     }
 }

@@ -15,7 +15,7 @@
       ],
       "run_at": "document_end",
       "js": [
-        "config.js",
+        "configparser.js",
         "tag.js",
         "heiseminus.js",
         "main.js"
@@ -28,7 +28,8 @@
     "128": "images/heiseminusIcon128px.png"
   },
   "web_accessible_resources": [
-    "images/*.svg"
+    "images/*.svg",
+    "config.json"
   ],
   "manifest_version": 2
 }
