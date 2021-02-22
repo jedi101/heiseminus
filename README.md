@@ -1,7 +1,7 @@
 ![heise minus](https://raw.githubusercontent.com/dasistdaniel/heiseminus/main/heiseminusIcon.png)
 # Introduction
-heise- is a chrome extension to hide the "Heise Plus" articles, which are articles
-you have to pay for, from https://heise.de
+"heise-" is a chrome extension to hide "heise+" articles, which are articles
+you have to pay for from https://www.heise.de
 
 ### Installation
 For now, this extension is not available in the chrome web store. So you need
