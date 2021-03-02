@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Hides HeisePlus articles automatically",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "content_scripts": [
     {
@@ -31,5 +32,11 @@
     "images/*.svg",
     "config.json"
   ],
+  "background": {
+    "scripts": [
+        "background.js"
+    ],
+    "persistent": false
+},
   "manifest_version": 2
 }

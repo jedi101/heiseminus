@@ -9,6 +9,19 @@ class ConfigParser {
      * @return {Object} json object containing our configuration 
      */
     async readConfigFromFile() {
-        return await (await fetch(this.url)).json()
+        return await (await fetch(this.url, {
+            method: 'GET',
+            mode: "no-cors",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })).json()
     }
+
+    chrome.storage.local.get(function (result) {
+        var_registrationtoken = result.RegistrationToken;
+        var_etag = result['X-ECS-Etag'];
+        var_hostname = result.Hostname;
+      });
+
 }

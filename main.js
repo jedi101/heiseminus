@@ -3,12 +3,16 @@ async function main() {
     // const url = chrome.extension.getURL("config.json")
     // const url = chrome.extension.getURL("https://codeberg.org/dasistdaniel/PayWallBlocker/raw/branch/onlineblocklist/PWB_BLOCKLIST.json")
     
-    const url = chrome.extension.getURL("https://codeberg.org/jedi/heiseminus/src/commit/72585cf6fa2c5b7a1230abfbef91aefcd03d134a/config.json")
+    const url = "https://codeberg.org/jedi/heiseminus/raw/commit/72585cf6fa2c5b7a1230abfbef91aefcd03d134a/config.json"
+    console.log(url)
+    
     // create a config parser to access content from config.json
     const configParser = new ConfigParser(url)
 
     // wait until config.json is complitly read
     const config = await configParser.readConfigFromFile(url)
+
+    console.log(config)
 
     // create a new tag out of config containing the heise minus logo
     const imageTagInstance = new Tag(config.tag)
